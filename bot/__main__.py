@@ -1,3 +1,4 @@
+from bot.helper.ext_utils.bot_utils import checking_access
 from time import time, monotonic
 from datetime import datetime
 from sys import executable
