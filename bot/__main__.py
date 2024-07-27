@@ -38,6 +38,17 @@ async def stats(client, message):
     msg, btns = await get_stats(message)
     await sendMessage(message, msg, btns, photo='IMAGES')
 
+async def tokenverify(client, message):
+    user_id = message.from_user.id
+    button = None
+    token_msg, btn = await checking_access(user_id, button)
+    if token_msg is not None:
+        return await sendMessage(message, token_msg, btn.build_menu(1))
+        
+    if token_msg is None:
+        msg2 = "Don't Worry, You're already Verified."
+        return await sendMessage(message, msg2)
+
 @new_task
 async def start(client, message):
     buttons = ButtonMaker()
@@ -247,7 +258,9 @@ async def log_check():
 async def main():
     await gather(start_cleanup(), torrent_search.initiate_search_tools(), restart_notification(), search_images(), set_commands(bot), log_check())
     await sync_to_async(start_aria2_listener, wait=False)
-    
+
+  bot.add_handler(MessageHandler(tokenverify, filters=command(BotCommands.tokencommand) ))
+
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
     bot.add_handler(CallbackQueryHandler(
