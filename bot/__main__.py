@@ -259,7 +259,7 @@ async def main():
     await gather(start_cleanup(), torrent_search.initiate_search_tools(), restart_notification(), search_images(), set_commands(bot), log_check())
     await sync_to_async(start_aria2_listener, wait=False)
 
-  bot.add_handler(MessageHandler(tokenverify, filters=command(BotCommands.tokencommand) ))
+    bot.add_handler(MessageHandler(tokenverify, filters=command(BotCommands.tokencommand) ))
 
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
